@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>City Car Service — Iași</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c0d10;
+  --bg2:#15171b;
+  --bg3:#1c1f24;
+  --red:#e6432f;
+  --red-dark:#b83221;
+  --steel:#98a1ad;
+  --steel-dim:#5b626c;
+  --white:#f3f4f6;
+  --line:rgba(255,255,255,.1);
+  --sans:'Inter',sans-serif;
+  --head:'Space Grotesk',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:var(--sans);overflow-x:hidden}
+::selection{background:var(--red);color:#fff}
+a{color:inherit}
+img{max-width:100%;display:block}
+.wrap{max-width:1160px;margin:0 auto;padding:0 6vw}
+
+/* ---------- nav ---------- */
+header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(12,13,16,.55);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+nav.wrap{display:flex;align-items:center;justify-content:space-between;height:72px}
+.logo{font-family:var(--head);font-weight:700;font-size:25px;letter-spacing:.5px;display:flex;align-items:center}
+.logo img{height:80px;width:auto;display:block}
+.logo span{color:var(--red)}
+.navlinks{display:flex;align-items:center;gap:32px}
+.navlinks a{font-size:13px;letter-spacing:.5px;color:var(--steel);transition:color .25s}
+.navlinks a:hover{color:var(--white)}
+.nav-cta{background:var(--red);color:#fff!important;padding:10px 20px;border-radius:3px;font-weight:600;font-size:13px}
+.nav-cta:hover{background:var(--red-dark)}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer}
+.burger span{width:22px;height:2px;background:var(--white)}
+@media(max-width:820px){
+  .navlinks{position:fixed;top:72px;left:0;right:0;background:var(--bg2);flex-direction:column;padding:26px 6vw;gap:20px;
+    transform:translateY(-140%);transition:transform .35s ease;border-bottom:1px solid var(--line)}
+  .navlinks.open{transform:translateY(0)}
+  .burger{display:flex}
+}
+
+/* ---------- hero (fixed — the car never disappears while you scroll) ---------- */
+.hero-fixed{position:fixed;inset:0;z-index:0;overflow:hidden}
+.hero-fixed img{width:100%;height:100%;object-fit:cover;object-position:center 35%}
+.hero-fixed::after{content:'';position:absolute;inset:0;
+  background:
+    linear-gradient(100deg, rgba(6,7,9,.92) 0%, rgba(6,7,9,.7) 32%, rgba(6,7,9,.25) 60%, rgba(6,7,9,.15) 100%),
+    linear-gradient(180deg, rgba(12,13,16,.35) 0%, rgba(12,13,16,.2) 45%, rgba(12,13,16,.97) 100%)}
+.hero-spacer{height:100vh;position:relative;z-index:1;display:flex;flex-direction:column;justify-content:center}
+.hero-content{padding:0 6vw;max-width:640px}
+.hero-content .kicker{font-size:12px;letter-spacing:3px;color:var(--red);font-weight:600;text-transform:uppercase}
+.hero-content h1{font-family:var(--head);font-weight:700;font-size:clamp(36px,5.5vw,60px);line-height:1.1;margin-top:16px;
+  text-shadow:0 8px 34px rgba(0,0,0,.85),0 2px 6px rgba(0,0,0,.9)}
+.hero-content p{margin-top:18px;color:var(--steel);font-size:16px;line-height:1.7;max-width:460px;
+  text-shadow:0 3px 14px rgba(0,0,0,.9),0 1px 3px rgba(0,0,0,.9)}
+.hero-cta{margin-top:32px;display:flex;gap:14px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 28px;border-radius:3px;font-weight:600;font-size:14px;letter-spacing:.3px;cursor:pointer;border:1px solid transparent;transition:all .25s}
+.btn-red{background:var(--red);color:#fff}
+.btn-red:hover{background:var(--red-dark)}
+.btn-outline{border-color:rgba(255,255,255,.3);color:#fff}
+.btn-outline:hover{border-color:#fff}
+.scroll-cue{position:absolute;left:50%;bottom:5vh;transform:translateX(-50%);z-index:2;display:flex;align-items:center;gap:8px;color:var(--steel);font-size:11px;letter-spacing:2px}
+.scroll-cue svg{animation:bob 2.2s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+/* ---------- gearbox ornament ---------- */
+.gear-wrap{flex-shrink:0;opacity:.95}
+@keyframes clockwise{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+@keyframes counter-clockwise{0%{transform:rotate(0deg)}100%{transform:rotate(-360deg)}}
+.gearbox{background:rgba(12,13,16,.5);height:150px;width:200px;position:relative;overflow:hidden;border-radius:10px;
+  border:1px solid var(--line);box-shadow:0 20px 50px -10px rgba(0,0,0,.6)}
+.gearbox .overlay{position:absolute;inset:0;border-radius:10px;box-shadow:inset 0 0 24px rgba(0,0,0,.7);z-index:10}
+.gear{position:absolute;height:60px;width:60px;box-shadow:0 -1px 0 0 #6b7280,0 1px 0 0 #000;border-radius:30px}
+.gear.large{height:120px;width:120px;border-radius:60px}
+.gear.one{top:12px;left:10px}
+.gear.two{top:61px;left:60px}
+.gear.three{top:110px;left:10px}
+.gear.four{top:13px;left:128px}
+.gear:after{content:'';position:absolute;height:36px;width:36px;border-radius:36px;background:var(--bg);top:50%;left:50%;
+  margin-left:-18px;margin-top:-18px;z-index:3;box-shadow:0 0 10px rgba(230,67,47,.25),inset 0 2px 0 0 #090909,inset 0 -1px 0 0 #6b7280}
+.gear.large:after{height:96px;width:96px;border-radius:48px;margin-left:-48px;margin-top:-48px}
+.gear-inner{position:relative;height:100%;width:100%;background:#4b5057;border-radius:30px;border:1px solid rgba(255,255,255,.08)}
+.large .gear-inner{border-radius:60px}
+.gear.one .gear-inner{animation:counter-clockwise 3s infinite linear}
+.gear.two .gear-inner{animation:clockwise 3s infinite linear}
+.gear.three .gear-inner{animation:counter-clockwise 3s infinite linear}
+.gear.four .gear-inner{animation:counter-clockwise 6s infinite linear}
+.gear-inner .bar{background:#4b5057;height:16px;width:76px;position:absolute;left:50%;margin-left:-38px;top:50%;margin-top:-8px;
+  border-radius:2px;border-left:1px solid rgba(255,255,255,.08);border-right:1px solid rgba(255,255,255,.08)}
+.large .gear-inner .bar{margin-left:-68px;width:136px}
+.gear-inner .bar:nth-child(2){transform:rotate(60deg)}
+.gear-inner .bar:nth-child(3){transform:rotate(120deg)}
+.gear-inner .bar:nth-child(4){transform:rotate(90deg)}
+.gear-inner .bar:nth-child(5){transform:rotate(30deg)}
+.gear-inner .bar:nth-child(6){transform:rotate(150deg)}
+@media(max-width:820px){.gear-wrap{transform:scale(.72);transform-origin:top right}}
+@media(prefers-reduced-motion: reduce){.gear-inner{animation:none!important}}
+
+/* ---------- main content (slides up and covers the fixed car) ---------- */
+main{position:relative;z-index:1;background:var(--bg)}
+.sec{padding:100px 0}
+.sec-head{max-width:560px;margin-bottom:56px}
+.sec-head-row{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:56px;flex-wrap:wrap}
+.sec-head-row .sec-head{margin-bottom:0}
+.sec-head .kicker{font-size:12px;letter-spacing:3px;color:var(--red);font-weight:600;text-transform:uppercase}
+.sec-head h2{font-family:var(--head);font-weight:700;font-size:clamp(28px,4vw,42px);margin-top:12px}
+.sec-head p{margin-top:14px;color:var(--steel);font-size:15.5px;line-height:1.7}
+
+/* about */
+.about{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.about img{border-radius:6px;aspect-ratio:4/3;object-fit:cover;box-shadow:0 30px 60px -20px rgba(0,0,0,.6)}
+.about .kicker{font-size:12px;letter-spacing:3px;color:var(--red);font-weight:600;text-transform:uppercase}
+.about h2{font-family:var(--head);font-weight:700;font-size:clamp(26px,3.4vw,38px);margin-top:12px}
+.about p{margin-top:16px;color:var(--steel);font-size:15.5px;line-height:1.75}
+@media(max-width:820px){.about{grid-template-columns:1fr;gap:32px}.about .art{order:-1}}
+
+/* services */
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+@media(max-width:820px){.svc-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.svc-grid{grid-template-columns:1fr}}
+.svc-card{background:var(--bg2);padding:32px 28px;transition:background .25s}
+.svc-card:hover{background:var(--bg3)}
+.svc-card svg{width:30px;height:30px;color:var(--red)}
+.svc-card h3{font-family:var(--head);font-size:17px;margin-top:18px;font-weight:600}
+.svc-card p{margin-top:8px;color:var(--steel);font-size:14px;line-height:1.6}
+
+/* booking */
+.booking{background:var(--bg2);border:1px solid var(--line)}
+.booking-inner{display:grid;grid-template-columns:.9fr 1.1fr;gap:0}
+@media(max-width:900px){.booking-inner{grid-template-columns:1fr}}
+.booking-side{padding:56px 6vw;background:var(--bg3);display:flex;flex-direction:column;justify-content:center}
+.booking-side .kicker{font-size:12px;letter-spacing:3px;color:var(--red);font-weight:600;text-transform:uppercase}
+.booking-side h2{font-family:var(--head);font-weight:700;font-size:clamp(24px,3vw,32px);margin-top:12px}
+.booking-side p{margin-top:14px;color:var(--steel);font-size:15px;line-height:1.7}
+.booking-side ul{margin-top:22px;list-style:none}
+.booking-side li{display:flex;gap:10px;align-items:baseline;padding:7px 0;font-size:14px;color:var(--white)}
+.booking-side li b{color:var(--red)}
+.booking-form{padding:56px 6vw;display:flex;flex-direction:column;justify-content:center;gap:20px}
+.field{display:flex;flex-direction:column;gap:8px}
+.field label{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--steel)}
+.field input{background:transparent;border:none;border-bottom:1px solid var(--line);color:var(--white);font-family:var(--sans);
+  font-size:15px;padding:8px 2px;outline:none;transition:border-color .3s}
+.field input:focus{border-color:var(--red)}
+.field input::placeholder{color:var(--steel-dim)}
+.wa-select{position:relative}
+.wa-select-btn{width:100%;display:flex;justify-content:space-between;align-items:center;background:transparent;border:none;
+  border-bottom:1px solid var(--line);color:var(--white);font-family:var(--sans);font-size:15px;padding:8px 2px;cursor:pointer;text-align:left}
+.wa-select.open .wa-select-btn,.wa-select-btn:hover{border-color:var(--red)}
+.wa-arrow{color:var(--red);transition:transform .25s}
+.wa-select.open .wa-arrow{transform:rotate(180deg)}
+.wa-select-list{display:none;position:absolute;z-index:20;top:calc(100% + 8px);left:0;right:0;background:var(--bg3);
+  border:1px solid var(--line);border-radius:4px;max-height:260px;overflow-y:auto}
+.wa-select.open .wa-select-list{display:block}
+.wa-option{padding:12px 16px;font-size:13.5px;color:var(--steel);cursor:pointer;border-bottom:1px solid var(--line);transition:all .2s}
+.wa-option:last-child{border-bottom:none}
+.wa-option:hover{background:rgba(230,67,47,.12);color:var(--white)}
+.wa-send{margin-top:6px;border:1px solid var(--red);background:var(--red);color:#fff}
+.wa-send:hover{background:var(--red-dark);border-color:var(--red-dark)}
+.wa-msg{font-size:13px;min-height:18px}
+.wa-msg.ok{color:var(--red)}
+.wa-msg.err{color:#f5a3a3}
+
+/* gallery */
+.gal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px}
+.gal-item{position:relative;aspect-ratio:4/3;border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.gal-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.gal-item:hover img{transform:scale(1.06)}
+.gal-item.empty{display:flex;align-items:center;justify-content:center;background:var(--bg2);text-align:center;padding:20px}
+.gal-item.empty span{font-size:12.5px;color:var(--steel-dim);letter-spacing:.5px}
+
+/* contact */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px}
+@media(max-width:820px){.contact-grid{grid-template-columns:1fr;gap:32px}}
+.contact-list{list-style:none}
+.contact-list li{padding:14px 0;border-bottom:1px solid var(--line);font-size:15px;display:flex;gap:12px}
+.contact-list b{color:var(--red);font-weight:600;min-width:90px}
+.hours-list{list-style:none}
+.hours-list li{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line);font-size:14.5px;color:var(--steel)}
+.hours-list li span:last-child{color:var(--white);font-weight:500}
+
+footer{position:relative;z-index:1;background:var(--bg3);border-top:1px solid var(--line);padding:40px 6vw;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;color:var(--steel-dim);font-size:12px}
+footer .logo{font-size:14px}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <a href="#acasa" class="logo">City Car <span>Service</span></a>
+    <div class="navlinks" id="navlinks">
+      <a href="#">Acasă</a>
+      <a href="#despre">Despre noi</a>
+      <a href="#servicii">Servicii</a>
+      <a href="#galerie">Galerie</a>
+      <a href="#programare" class="nav-cta">Programează-te</a>
+    </div>
+    <button class="burger" id="burger"><span></span><span></span><span></span></button>
+  </nav>
+</header>
+
+<!-- Maşina rămâne fixă în fundal — secţiunile de mai jos "trec" peste ea
+     pe măsură ce derulezi, nu o dau la o parte dintr-o dată. -->
+<div class="hero-fixed" id="acasa">
+  <img src="https://images.unsplash.com/photo-1625047509168-a7026f36de04?fm=jpg&amp;q=80&amp;w=2400&amp;auto=format&amp;fit=crop" alt="Service auto — mecanică generală">
+</div>
+
+<div class="hero-spacer">
+  <div class="hero-content">
+    <div class="kicker">Mecanică auto — Iași</div>
+    <h1>Mașina ta, în mâini de încredere.</h1>
+    <p>Diagnoză corectă, reparații făcute o singură dată, bine. Mecanică generală pentru orice marcă — fără presiune, fără surprize la final.</p>
+    <div class="hero-cta">
+      <a href="#programare" class="btn btn-red">Programează-te pe WhatsApp</a>
+      <a href="#servicii" class="btn btn-outline">Vezi serviciile</a>
+    </div>
+  </div>
+  <div class="scroll-cue">
+    <span>DERULEAZĂ</span>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 9l6 6 6-6"/></svg>
+  </div>
+</div>
+
+<main>
+
+  <section class="sec about wrap" id="despre">
+    <div class="art">
+      <img src="https://images.unsplash.com/photo-1643700973089-baa86a1ab9ee?fm=jpg&amp;q=80&amp;w=1600&amp;auto=format&amp;fit=crop" alt="Mecanic la lucru">
+    </div>
+    <div>
+      <div class="kicker">Despre noi</div>
+      <h2>Un service care îți explică, nu doar reparaţia.</h2>
+      <p>City Car Service e un atelier de mecanică generală în Iași, gândit pentru oameni care vor să înţeleagă ce se întâmplă cu maşina lor, nu doar o factură la final. Verificăm, îţi arătăm exact problema şi reparăm doar ce trebuie reparat — nimic în plus.</p>
+      <p>Lucrăm pe orice marcă şi model, de la maşini de oraş la SUV-uri, cu piese de calitate şi diagnoză corectă de la primul control.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="servicii">
+    <div class="wrap">
+      <div class="sec-head-row">
+        <div class="sec-head">
+          <div class="kicker">Ce facem</div>
+          <h2>Mecanică generală, de la diagnoză la reparaţie</h2>
+          <p>Ne ocupăm de partea mecanică a maşinii tale — motor, transmisie, frâne, suspensie şi întreţinere periodică.</p>
+        </div>
+        <div class="gear-wrap" aria-hidden="true">
+          <div class="gearbox">
+            <div class="overlay"></div>
+            <div class="gear one"><div class="gear-inner"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div></div>
+            <div class="gear two"><div class="gear-inner"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div></div>
+            <div class="gear three"><div class="gear-inner"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div></div>
+            <div class="gear four large"><div class="gear-inner"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="svc-grid" id="svcGrid"></div>
+    </div>
+  </section>
+
+  <section class="sec" id="programare">
+    <div class="wrap">
+      <div class="booking">
+        <div class="booking-inner">
+          <div class="booking-side">
+            <div class="kicker">Programare</div>
+            <h2>Vino cu problema, pleci cu răspunsul.</h2>
+            <p>Completezi formularul şi trimiţi programarea direct pe WhatsApp — stabilim împreună ziua şi ora.</p>
+            <ul>
+              <li><b>—</b> Diagnoză computerizată</li>
+              <li><b>—</b> Constatare şi verificare mecanică</li>
+              <li><b>—</b> Reparaţii şi întreţinere generală</li>
+            </ul>
+          </div>
+          <div class="booking-form">
+            <div class="field"><label>Nume &amp; prenume <span style="color:var(--red)">*</span></label>
+              <input type="text" id="waName" placeholder="Ex: Andrei Popescu" required></div>
+            <div class="field">
+              <label>Ce ai nevoie <span style="color:var(--red)">*</span></label>
+              <div class="wa-select" id="waSelect">
+                <button type="button" class="wa-select-btn" id="waSelectBtn">
+                  <span id="waSelectLabel">Alege serviciul</span>
+                  <span class="wa-arrow">▾</span>
+                </button>
+                <div class="wa-select-list" id="waSelectList"></div>
+              </div>
+            </div>
+            <div class="field">
+              <label>Marcă şi model maşină</label>
+              <input type="text" id="waCar" placeholder="Ex: VW Golf 6, 2011">
+            </div>
+            <div class="field">
+              <label>Număr de telefon <span style="color:var(--red)">*</span></label>
+              <input type="tel" id="waPhone" inputmode="tel" maxlength="16" placeholder="07xx xxx xxx" required>
+            </div>
+            <button type="button" class="btn wa-send" id="waSendBtn">Trimite pe WhatsApp</button>
+            <div class="wa-msg" id="waMsg"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="galerie">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="kicker">Galerie</div>
+        <h2>Din atelier</h2>
+        <p>Poze din timpul lucrărilor — se completează pe măsură ce adăugăm.</p>
+      </div>
+      <div class="gal-grid" id="galGrid"></div>
+    </div>
+  </section>
+
+  <section class="sec" id="contact">
+    <div class="wrap contact-grid">
+      <div>
+        <div class="sec-head" style="margin-bottom:26px">
+          <div class="kicker">Contact</div>
+          <h2>Hai pe la noi</h2>
+        </div>
+        <ul class="contact-list">
+          <li><b>Tel.</b> <span>07XX XXX XXX</span></li>
+          <li><b>Email</b> <span>contact@citycarservice.ro</span></li>
+          <li><b>Adresă</b> <span>Iași — strada [de completat]</span></li>
+        </ul>
+      </div>
+      <div>
+        <div class="sec-head" style="margin-bottom:26px">
+          <div class="kicker">Program</div>
+          <h2>Orar</h2>
+        </div>
+        <ul class="hours-list">
+          <li><span>Luni – Vineri</span><span>08:00 – 18:00</span></li>
+          <li><span>Sâmbătă</span><span>09:00 – 14:00</span></li>
+          <li><span>Duminică</span><span>Închis</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="logo">CITY CAR <span style="color:var(--red)">SERVICE</span></div>
+  <span>© 2026 City Car Service — Iași</span>
+</footer>
+
+<script>
+/* ================= SERVICII ================= */
+const SERVICES = [
+  {name:'Diagnoză computerizată', desc:'Citire completă a codurilor de eroare şi identificarea problemei reale, nu doar a simptomului.', icon:'M12 3v3m0 12v3M3 12h3m12 0h3M6.3 6.3l2.1 2.1m7.2 7.2l2.1 2.1m0-11.4l-2.1 2.1m-7.2 7.2l-2.1 2.1M12 8a4 4 0 100 8 4 4 0 000-8z'},
+  {name:'Constatare şi verificare mecanică', desc:'Control general înainte de o cumpărare sau o cursă lungă — ştii exact ce stare are maşina.', icon:'M9 12l2 2 4-4m5 2a9 9 0 11-18 0 9 9 0 0118 0z'},
+  {name:'Reparaţii motor', desc:'De la scurgeri şi zgomote suspecte la reparaţii majore de bloc motor.', icon:'M4 7h16M4 12h16M4 17h10'},
+  {name:'Distribuţie şi curea', desc:'Verificare şi schimb la timp, înainte să facă probleme mai mari.', icon:'M12 8a4 4 0 100 8 4 4 0 000-8zM12 2v3m0 14v3m10-10h-3M5 12H2'},
+  {name:'Frâne şi sistem de frânare', desc:'Plăcuţe, discuri, etrieri şi lichid de frână — siguranţa nu se negociază.', icon:'M12 3a9 9 0 100 18 9 9 0 000-18zm0 5v4l3 2'},
+  {name:'Suspensie şi direcţie', desc:'Amortizoare, bucşi şi geometrie — pentru un drum stabil şi liniştit.', icon:'M4 20l4-10 4 6 4-8 4 12'},
+  {name:'Ambreiaj', desc:'Diagnoză şi înlocuire completă, cu piese verificate.', icon:'M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z'},
+  {name:'Sistem de răcire', desc:'Radiator, termostat, pompă de apă — motorul rămâne la temperatura potrivită.', icon:'M12 3v18M8 7l4-4 4 4M8 17l4 4 4-4'},
+  {name:'Schimb ulei şi filtre', desc:'Ulei, filtru de ulei, aer şi combustibil, la intervalul potrivit maşinii tale.', icon:'M12 21c4-4 6-7 6-10a6 6 0 10-12 0c0 3 2 6 6 10z'}
+];
+
+const svcGrid = document.getElementById('svcGrid');
+SERVICES.forEach(s => {
+  const el = document.createElement('div');
+  el.className = 'svc-card';
+  el.innerHTML = `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="${s.icon}"/></svg>
+    <h3>${s.name}</h3>
+    <p>${s.desc}</p>`;
+  svcGrid.appendChild(el);
+});
+
+/* ================= GALERIE =================
+   Cum adaugi o poză nouă mai târziu:
+   1. Pune fişierul poză (ex: lucrare-5.jpg) în folderul images/, alături
+      de acest fişier html.
+   2. Adaugă o linie nouă în lista GALLERY de mai jos, cu numele fişierului.
+   3. Salvează. Poza apare automat în galerie, fără alt cod de scris.
+   Câmpurile care nu au încă o poză (src: null) arată un cadru gol, ca
+   să ştii unde mai ai loc de completat.
+================================================= */
+const GALLERY = [
+  {src:'https://images.unsplash.com/photo-1604071334368-bb3cb256180b?fm=jpg&q=80&w=1200&auto=format&fit=crop', alt:'Lucru la o piesă cu cheia'},
+  {src:'https://images.unsplash.com/photo-1643700973089-baa86a1ab9ee?fm=jpg&q=80&w=1200&auto=format&fit=crop', alt:'Schimb de ulei'},
+  {src:null},
+  {src:null}
+];
+const galGrid = document.getElementById('galGrid');
+GALLERY.forEach(g => {
+  const el = document.createElement('div');
+  el.className = 'gal-item' + (g.src ? '' : ' empty');
+  el.innerHTML = g.src ? `<img src="${g.src}" alt="${g.alt || ''}">` : `<span>adaugă o poză aici</span>`;
+  galGrid.appendChild(el);
+});
+
+/* ================= NAV MOBIL ================= */
+const burger = document.getElementById('burger');
+const navlinks = document.getElementById('navlinks');
+burger.addEventListener('click', () => navlinks.classList.toggle('open'));
+navlinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navlinks.classList.remove('open')));
+
+/* ================= PROGRAMARE PE WHATSAPP =================
+   IMPORTANT: schimbă numărul de mai jos cu numărul real de WhatsApp
+   al service-ului, în format internaţional, fără + şi fără spaţii
+   (ex: 0748607772 devine 40748607772).
+================================================================= */
+const WHATSAPP_NUMBER = '40700000000'; // <-- PUNE AICI NUMĂRUL REAL
+
+function telefonValid(t){
+  let c = String(t||'').replace(/\D/g,'');
+  if(c.startsWith('0040')) c = c.slice(4);
+  else if(c.startsWith('40') && c.length>10) c = c.slice(2);
+  if(c.length===9 && c[0]!=='0') c = '0'+c;
+  return /^(07[2-9]\d{7}|0[23]\d{8})$/.test(c);
+}
+
+const waPhoneInput = document.getElementById('waPhone');
+waPhoneInput.addEventListener('input', () => {
+  waPhoneInput.value = waPhoneInput.value.replace(/[^\d+\s]/g, '');
+});
+
+let waService = null;
+const waSelect = document.getElementById('waSelect');
+const waSelectBtn = document.getElementById('waSelectBtn');
+const waSelectList = document.getElementById('waSelectList');
+const waSelectLabel = document.getElementById('waSelectLabel');
+
+SERVICES.forEach(s => {
+  const el = document.createElement('div');
+  el.className = 'wa-option';
+  el.textContent = s.name;
+  el.addEventListener('click', () => {
+    waService = s.name;
+    waSelectLabel.textContent = s.name;
+    waSelect.classList.remove('open');
+  });
+  waSelectList.appendChild(el);
+});
+waSelectBtn.addEventListener('click', () => waSelect.classList.toggle('open'));
+document.addEventListener('click', (e) => { if(!waSelect.contains(e.target)) waSelect.classList.remove('open'); });
+
+function arataMesajWa(text, ok){
+  const el = document.getElementById('waMsg');
+  el.textContent = text;
+  el.className = 'wa-msg ' + (ok ? 'ok' : 'err');
+}
+
+document.getElementById('waSendBtn').addEventListener('click', () => {
+  const name = document.getElementById('waName').value.trim();
+  const car = document.getElementById('waCar').value.trim();
+  const phone = document.getElementById('waPhone').value.trim();
+
+  if(!name){ arataMesajWa('Completează numele şi prenumele.', false); return; }
+  if(!waService){ arataMesajWa('Alege ce ai nevoie.', false); return; }
+  if(!phone){ arataMesajWa('Completează numărul de telefon.', false); return; }
+  if(!telefonValid(phone)){ arataMesajWa('Numărul trebuie să fie un număr valid din România.', false); return; }
+
+  arataMesajWa('', true);
+  const mesaj = `Bună! Aş dori o programare la City Car Service.\nNume: ${name}\nAm nevoie de: ${waService}${car ? `\nMaşină: ${car}` : ''}\nTelefon: ${phone}`;
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mesaj)}`, '_blank');
+});
+</script>
+
+</body>
+</html>
